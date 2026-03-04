@@ -58,10 +58,10 @@
 - SC-061: 错误日志包含时间戳和错误描述
 
 **Acceptance Criteria:**
-- extra字段为字符串格式
-- 包含算法执行的最后错误日志
-- 示例："2026-03-04 10:00:00 算法层计算溢出，任务终止"
-- 从算法层获取错误信息
+- extra字段为JSON格式（与running一致）
+- 包含字段：error_code（错误码）、error_message（错误描述）、error_time（时间戳）
+- 示例：{"error_code": 500, "error_message": "算法层计算溢出，任务终止", "error_time": "2026-03-04T10:00:00"}
+- 从算法层或error_log表获取错误信息
 
 ### REQ-SM-004: Algorithm Layer Status Sync
 **SHALL** synchronize task status with algorithm layer in real-time.
@@ -86,7 +86,7 @@
 | not_exist | TaskID不存在/已被删除 | 无 |
 | created | 任务已创建，未启动 | 无 |
 | running | 任务正在执行 | 循环轮次、误差信息 |
-| failed | 任务执行失败 | 错误日志 |
+| failed | 任务执行失败 | 错误日志(JSON: error_code/error_message/error_time) |
 | stop | 任务已被手动停止 | 无 |
 | delete | 任务已被删除 | 无 |
 | finished | 任务执行完成 | 无 |

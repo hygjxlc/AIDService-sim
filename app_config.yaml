@@ -1,0 +1,26 @@
+# AID-Service Configuration
+# Runtime configuration for the AID backend service
+
+auth:
+  api_key: "11111111"
+
+# Internal callback authentication
+internal:
+  callback_token: "aid_internal_callback_token_2024"
+
+database:
+  path: "./data/aid_service.db"
+  backup_path: "./backups/"
+
+storage:
+  base_path: "./data/aid/"
+
+algorithm:
+  base_url: "http://localhost:9000"
+  timeout_sec: 30
+  mock_mode: true
+
+logging:
+  level: "INFO"
+  path: "./logs/"
+  retention_days: 30

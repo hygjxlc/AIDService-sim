@@ -96,6 +96,7 @@ data:
     - { name: product.stp, desc: 产品原始文件 }
     - { name: mesh.jnl, desc: 网格划分脚本 }
     - { name: support_side_mould_x.stp, desc: 整形板文件 }
+    - { name: support_up_mould_x.stp, desc: 上模整形板文件 }
     - { name: rubber_section.stp, desc: 胶条文件 }
   
   file_formats: [stp, txt, csv, yml, jnl]

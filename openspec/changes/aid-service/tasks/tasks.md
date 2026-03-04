@@ -59,7 +59,7 @@
 ## Phase 3: Business API Implementation
 
 ### TASK-007: Task Creation API (newTaskCreate)
-- [ ] 实现 POST /api/v1/tasks/create 端点
+- [ ] 实现 POST /api/v1/newTaskCreate 端点
 - [ ] 实现 simulateType 校验 (LaWan/CHOnYA/ZhuZao/ZhaZhi/ZHEWan/JIYA)
 - [ ] 实现 taskName 格式校验 (1-64字符, 字母/数字/下划线)
 - [ ] 实现 TaskID 生成逻辑
@@ -68,25 +68,28 @@
 - [ ] 编写 API 单元测试
 
 ### TASK-008: File Upload API (uploadParamfiles)
-- [ ] 实现 POST /api/v1/tasks/{taskId}/files 端点
+- [ ] 实现 POST /api/v1/uploadParamfiles 端点
+- [ ] 请求体包含 TaskID 和 files 文件数组
 - [ ] 实现多文件上传处理
 - [ ] 实现文件名称校验 (必选/可选文件列表)
 - [ ] 实现文件格式校验 (stp/txt/csv/yml/jnl)
-- [ ] 实现文件大小校验 (≤100MB)
+- [ ] 实现文件大小校验 (≤10M B)
 - [ ] 实现文件存储 (/data/aid/{TaskID}/)
 - [ ] 实现同名文件覆盖
-- [ ] 持久化文件信息到数据库
+- [ ] 持久化文件信息到数据库 (file_type=required/optional)
 - [ ] 编写 API 单元测试
 
 ### TASK-009: Task Verification API (newTaskverify)
-- [ ] 实现 GET /api/v1/tasks/{taskId}/verify 端点
+- [ ] 实现 POST /api/v1/newTaskverify 端点
+- [ ] 请求体包含 TaskID
 - [ ] 查询已上传文件列表
 - [ ] 校验7个必选文件完整性
 - [ ] 返回 ready 状态和 missingFiles 列表
 - [ ] 编写 API 单元测试
 
 ### TASK-010: Task Start API (startTask)
-- [ ] 实现 POST /api/v1/tasks/{taskId}/start 端点
+- [ ] 实现 POST /api/v1/startTask 端点
+- [ ] 请求体包含 TaskID
 - [ ] 校验任务状态 (created/stop)
 - [ ] 校验必选文件完整性
 - [ ] 调用算法层启动仿真
@@ -94,7 +97,8 @@
 - [ ] 编写 API 单元测试
 
 ### TASK-011: Task Stop API (stopTask)
-- [ ] 实现 POST /api/v1/tasks/{taskId}/stop 端点
+- [ ] 实现 POST /api/v1/stopTask 端点
+- [ ] 请求体包含 TaskID
 - [ ] 校验任务状态 (running)
 - [ ] 调用算法层停止仿真
 - [ ] 更新任务状态为 stop
@@ -102,7 +106,8 @@
 - [ ] 编写 API 单元测试
 
 ### TASK-012: Task Delete API (deleteTask)
-- [ ] 实现 DELETE /api/v1/tasks/{taskId} 端点
+- [ ] 实现 POST /api/v1/deleteTask 端点
+- [ ] 请求体包含 TaskID
 - [ ] 支持删除任意状态任务
 - [ ] running 状态任务先停止
 - [ ] 删除任务目录及所有文件
@@ -110,7 +115,8 @@
 - [ ] 编写 API 单元测试
 
 ### TASK-013: Task Status Query API (queryTaskStatus)
-- [ ] 实现 GET /api/v1/tasks/{taskId}/status 端点
+- [ ] 实现 POST /api/v1/queryTaskStatus 端点
+- [ ] 请求体包含 TaskID
 - [ ] 从算法层获取实时状态
 - [ ] 返回7种状态之一
 - [ ] running 状态返回进度信息 (cycle, errorInfo)
@@ -118,7 +124,8 @@
 - [ ] 编写 API 单元测试
 
 ### TASK-014: Task Result Fetch API (fetachTaskResult)
-- [ ] 实现 GET /api/v1/tasks/{taskId}/result 端点
+- [ ] 实现 GET /api/v1/fetachTaskResult 端点
+- [ ] 查询参数包含 TaskID
 - [ ] 校验任务状态 (finished)
 - [ ] 验证结果文件存在
 - [ ] 返回 .stp 格式文件流
@@ -129,7 +136,7 @@
 - [ ] 跳过认证中间件
 - [ ] 检查数据库连接
 - [ ] 检查算法层连接
-- [ ] 返回服务健康状态
+- [ ] 返回服务健康状态 (code/status/message/timestamp)
 - [ ] 编写 API 单元测试
 
 ---
