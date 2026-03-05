@@ -57,3 +57,6 @@ htmlcov/
 # OS
 .DS_Store
 Thumbs.db
+
+# OpenSpec (exclude from code repository)
+openspec/
