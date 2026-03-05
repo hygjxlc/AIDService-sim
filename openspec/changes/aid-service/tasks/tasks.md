@@ -227,6 +227,18 @@
 - [ ] 编写接口使用示例
 - [ ] 记录错误码说明
 
+### TASK-027: Architecture Implementation Alignment (architecture_spec.md)
+- [ ] 对照 architecture_spec.md 检查 API 层、服务层、仓储层和算法客户端的实现是否完整
+- [ ] 确认各 capability（authentication、task_management、file_management、status_monitor、result_delivery、data_storage、error_handling）均有对应 service/repository 组件
+- [ ] 确认 API 层不直接访问数据库或文件系统，均通过 Service/Repository 层访问
+
+### TASK-028: Architecture Compliance Review (architecture_spec.md)
+- [ ] 按 REQ-ARC-SVC-001 ~ REQ-ARC-SVC-007 制作架构检查清单
+- [ ] 检查错误码使用是否与 error_codes 段一致
+- [ ] 检查日志字段和格式是否与 quality.observability 要求一致
+- [ ] 检查认证中间件是否覆盖所有需要认证的接口
+- [ ] 输出一次架构评审结论记录（通过/问题列表）
+
 ---
 
 ## Task Dependencies

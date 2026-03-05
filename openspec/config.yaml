@@ -291,7 +291,7 @@ workflow:
     - { name: implementation, artifacts: [code, tests] }
     - { name: testing, artifacts: [test_reports] }
     - { name: deployment, artifacts: [deploy_package] }
-  
+
   deliverables:
     source_code:
       - Python源码（PEP8规范，注释≥80%）
@@ -301,6 +301,7 @@ workflow:
       - 部署脚本（Shell/批处理）
     documentation:
       - 需求规格说明书
+      - 架构设计文档（openspec/changes/aid-service/specs/architecture_spec.md）
       - 接口文档（Swagger/OpenAPI 3.0）
       - 开发手册
       - 部署手册
