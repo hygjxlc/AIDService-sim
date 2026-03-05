@@ -1,7 +1,7 @@
 """File Upload Endpoint"""
-from fastapi import APIRouter, Depends, UploadFile, File, Form
+from fastapi import APIRouter, Depends, UploadFile, File, Form, Request
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 
 from src.database.db import get_db
 from src.database.task_repository import TaskRepository
@@ -15,7 +15,7 @@ router = APIRouter()
 @router.post("/uploadParamfiles", response_model=FileUploadResponse)
 async def upload_files(
     TaskID: str = Form(...),
-    api_key: str = Form(...),
+    api_key: Optional[str] = Form(None),
     files: List[UploadFile] = File(...),
     db: Session = Depends(get_db)
 ):

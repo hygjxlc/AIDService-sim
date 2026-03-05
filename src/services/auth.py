@@ -49,6 +49,11 @@ class AuthMiddleware(BaseHTTPMiddleware):
         api_key = request.query_params.get("api_key")
         if api_key:
             return api_key
+
+        # Try request headers (apiKey or api_key header)
+        api_key = request.headers.get("apiKey") or request.headers.get("api_key")
+        if api_key:
+            return api_key
         
         # Try to parse JSON body for POST requests
         if request.method == "POST":
@@ -67,11 +72,10 @@ class AuthMiddleware(BaseHTTPMiddleware):
                     pass
             
             elif "multipart/form-data" in content_type:
-                # For multipart, api_key should be in form field
-                # This will be handled by endpoint parameters
-                form = await request.form()
-                api_key = form.get("api_key")
-                return api_key
+                # NOTE: Do NOT call request.form() here — it consumes the stream
+                # and makes form fields unavailable to the endpoint handler.
+                # api_key for multipart should be passed via header (apiKey) or query param.
+                pass
         
         return None
 

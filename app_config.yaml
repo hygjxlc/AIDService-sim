@@ -21,6 +21,6 @@ algorithm:
   mock_mode: true
 
 logging:
-  level: "INFO"
+  level: "DEBUG"
   path: "./logs/"
   retention_days: 30

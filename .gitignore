@@ -58,5 +58,14 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
+# Data directory (runtime data, not for version control)
+data/
+
+# Backups
+backups/
+
+# Temp scripts
+query_db.py
+
 # OpenSpec (exclude from code repository)
 openspec/
