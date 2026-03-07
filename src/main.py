@@ -11,6 +11,7 @@ from src.utils.logger import setup_logging, get_system_logger
 from src.services.auth import AuthMiddleware
 from src.services.status_sync import get_status_sync_service
 from src.services.backup_service import get_backup_service
+from src.services.simulation_runner import get_simulation_runner
 
 
 @asynccontextmanager
@@ -28,6 +29,9 @@ async def lifespan(app: FastAPI):
     # Start background services
     status_sync = get_status_sync_service()
     backup_service = get_backup_service()
+    
+    # Initialize simulation runner singleton (ensures it exists on the event loop)
+    get_simulation_runner()
     
     await status_sync.start()
     await backup_service.start()

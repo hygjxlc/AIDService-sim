@@ -73,14 +73,22 @@ class FileStorageService:
         return False
     
     def get_result_file(self, task_id: str) -> Optional[Path]:
-        """Find result .stp file in task's result directory"""
+        """Find result file in task's result directory.
+        
+        Looks for {task_id}result.stp first, then falls back to any .stp file.
+        """
         task_dir = self.get_task_dir(task_id)
         result_dir = task_dir / "result"
         
         if not result_dir.exists():
             return None
         
-        # Find .stp files in result directory
+        # Prefer the canonical result file: {task_id}result.stp
+        named_result = result_dir / f"{task_id}result.stp"
+        if named_result.exists():
+            return named_result
+        
+        # Fallback: find any .stp file in result directory
         stp_files = list(result_dir.glob("*.stp"))
         if stp_files:
             return stp_files[0]

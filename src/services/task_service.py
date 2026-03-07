@@ -8,6 +8,7 @@ from src.database.file_repository import FileRepository
 from src.database.error_repository import ErrorLogRepository
 from src.utils.task_id_generator import generate_task_id, is_valid_simulate_type
 from src.services.file_service import FileStorageService, get_missing_files
+from src.services.simulation_runner import get_simulation_runner
 
 
 # Task name validation pattern: 1-64 chars, letters/numbers/underscore
@@ -100,9 +101,11 @@ class TaskService:
         if missing:
             return False, f"缺少必需文件: {', '.join(missing)}", task.status
         
-        # TODO: Call algorithm layer to start simulation
-        # For now, just update status
+        # Update status to running
         self.task_repo.update_status(task_id, "running")
+        
+        # Schedule background simulation timer (5 min → result file → finished)
+        get_simulation_runner().start_simulation(task_id)
         
         return True, "任务启动成功", "running"
     
@@ -120,8 +123,10 @@ class TaskService:
         if task.status != "running":
             return True, "操作无效", task.status
         
-        # TODO: Call algorithm layer to stop simulation
-        # For now, just update status
+        # Cancel the simulation timer – prevents result file creation and
+        # status transition to finished
+        get_simulation_runner().cancel_simulation(task_id)
+        
         self.task_repo.update_status(task_id, "stop")
         
         return True, "任务停止成功", "stop"
@@ -136,10 +141,10 @@ class TaskService:
         if not task:
             return False, "任务不存在"
         
-        # If running, stop first
+        # If running, cancel the simulation timer first to prevent result
+        # file creation and the status transition to finished
         if task.status == "running":
-            # TODO: Call algorithm layer to stop
-            pass
+            get_simulation_runner().cancel_simulation(task_id)
         
         try:
             # Delete task directory
