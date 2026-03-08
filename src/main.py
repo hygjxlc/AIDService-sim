@@ -29,10 +29,25 @@ async def lifespan(app: FastAPI):
     # Start background services
     status_sync = get_status_sync_service()
     backup_service = get_backup_service()
-    
+
     # Initialize simulation runner singleton (ensures it exists on the event loop)
-    get_simulation_runner()
-    
+    runner = get_simulation_runner()
+
+    # Recover timers for tasks that were 'running' before restart
+    from src.database.db import get_session
+    from src.database.task_repository import TaskRepository
+    recovery_db = get_session()
+    try:
+        repo = TaskRepository(recovery_db)
+        running_tasks = repo.get_tasks_by_status("running")
+        if running_tasks:
+            logger.info(f"Recovering {len(running_tasks)} running task(s) after restart")
+            for task in running_tasks:
+                runner.start_simulation(task.task_id)
+                logger.info(f"Resumed simulation timer for task {task.task_id}")
+    finally:
+        recovery_db.close()
+
     await status_sync.start()
     await backup_service.start()
     logger.info("Background services started")
