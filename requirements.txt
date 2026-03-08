@@ -1,5 +1,6 @@
 # AID-Service Dependencies
 # 触发jenkins自动部署
+# 再一次触发jenkins自动部署
 # FastAPI framework
 fastapi>=0.100.0
 uvicorn[standard]>=0.23.0
