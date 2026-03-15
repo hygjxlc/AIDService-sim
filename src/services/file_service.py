@@ -10,8 +10,8 @@ from src.config import get_settings
 # Required files for simulation tasks
 REQUIRED_FILES = [
     "config.yml",
-    "feature_line_ref_0.stp",
-    "feature_line_ref_1.stp",
+    "feature_line_ref_0.txt",
+    "feature_line_ref_1.txt",
     "left_boundary.txt",
     "materials.csv",
     "mould_section.stp",
