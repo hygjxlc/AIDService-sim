@@ -25,6 +25,7 @@ OPTIONAL_FILES = [
     "support_side_mould_x.stp",
     "support_up_mould_x.stp",  # 上模整形板文件
     "rubber_section.stp",
+    "strip_section_v2.stp",
 ]
 
 # Allowed file extensions
